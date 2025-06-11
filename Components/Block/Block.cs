@@ -120,11 +120,11 @@ public partial class Block : Node2D
     
     // VVV DEBUG VVV  //
 
-    private bool IsDebug => GetTree().GetCurrentScene() != this;
+    private bool IsDebug => GetTree().GetCurrentScene() == this;
 
     private void SetupForDebug()
     {
-        if (IsDebug) return;
+        if (!IsDebug) return;
 
         Size = 100;
         Position = DisplayServer.WindowGetSize() / 2;
@@ -133,7 +133,7 @@ public partial class Block : Node2D
 
     private void ProcessInputForDebug()
     {
-        if (IsDebug) return;
+        if (!IsDebug) return;
         
         var direction = Vector2.Zero;
         if (Input.IsActionJustPressed("ui_up")) direction += Vector2.Up;
