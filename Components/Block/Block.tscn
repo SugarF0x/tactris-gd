@@ -1,11 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://dgj8jsv3tsqap"]
+[gd_scene load_steps=5 format=3 uid="uid://dgj8jsv3tsqap"]
 
 [ext_resource type="Script" uid="uid://0t8y4tv33gro" path="res://Components/Block/Block.cs" id="1_8mjfh"]
+[ext_resource type="Shader" uid="uid://dji5kfjhlkjph" path="res://Components/Block/BlockShadow.gdshader" id="2_8xymb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ex2vs"]
+shader = ExtResource("2_8xymb")
+shader_parameter/glow_color = Color(1, 1, 1, 1)
+shader_parameter/edge_softness = 0.4
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8xymb"]
 
 [node name="Block" type="Node2D"]
 script = ExtResource("1_8mjfh")
 
+[node name="Shadow" type="Polygon2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ex2vs")
+scale = Vector2(2, 2)
+texture = SubResource("CanvasTexture_8xymb")
+polygon = PackedVector2Array(-0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5)
+uv = PackedVector2Array(0, 0, 1, 0, 1, 1, 0, 1)
+
 [node name="Polygon2D" type="Polygon2D" parent="."]
 unique_name_in_owner = true
-color = Color(0.78229, 1, 0.995739, 1)
 polygon = PackedVector2Array(-0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5)

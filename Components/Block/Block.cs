@@ -19,10 +19,12 @@ public partial class Block : Node2D
     }
 
     private Polygon2D _polygon;
+    private Polygon2D _shadow;
     
     private void RegisterChildren()
     {
         _polygon = GetNode<Polygon2D>("%Polygon2D");
+        _shadow = GetNode<Polygon2D>("%Shadow");
     }
     
     private float _size = 1f;
@@ -39,6 +41,19 @@ public partial class Block : Node2D
                 new Vector2(.5f * value, .5f * value),
                 new Vector2(-.5f * value, .5f * value)
             ];
+            _shadow.Polygon = _polygon.Polygon;
+        }
+    }
+
+    private Color _color = Colors.White;
+    public Color Color
+    {
+        get => _color;
+        set
+        {
+            _color = value;
+            _polygon.Color = value;
+            ((ShaderMaterial)_shadow.Material).SetShaderParameter("glow_color", value);
         }
     }
 
@@ -88,6 +103,7 @@ public partial class Block : Node2D
 
         Size = 100;
         Position = DisplayServer.WindowGetSize() / 2;
+        Color = Colors.Cyan;
     }
 
     private void ProcessInputForDebug()
