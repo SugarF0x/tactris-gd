@@ -6,5 +6,6 @@
 script = ExtResource("1_8mjfh")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+unique_name_in_owner = true
 color = Color(0.78229, 1, 0.995739, 1)
 polygon = PackedVector2Array(-0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5)
