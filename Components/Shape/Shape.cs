@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Godot;
 
@@ -20,6 +21,8 @@ public partial class Shape : Node2D
         ProcessInputForDebug();
     }
 
+    private Block.Block[] Blocks = [];
+
     private Color _color = Colors.White;
     public Color Color
     {
@@ -27,7 +30,7 @@ public partial class Shape : Node2D
         set
         {
             _color = value;
-            foreach (var block in GetChildren().Cast<Block.Block>()) block.Color = value;
+            UpdateAllBlockColors();
         }
     }
     
@@ -49,13 +52,7 @@ public partial class Shape : Node2D
         set
         {
             _gap = value;
-            var blocks = GetChildren().Cast<Block.Block>().ToArray();
-            for (var i = 0; i < (Points ?? []).Length; i++)
-            {
-                var block = blocks[i];
-                var point = Points[i];
-                block.Position = point * BlockSize + value * i * Vector2.One;
-            }
+            UpdateAllBlockPositions();
         }
     }
 
@@ -66,14 +63,7 @@ public partial class Shape : Node2D
         set
         {
             _blockSize = value;
-            var blocks = GetChildren().Cast<Block.Block>().ToArray();
-            for (var i = 0; i < (Points ?? []).Length; i++)
-            {
-                var block = blocks[i];
-                var point = Points[i];
-                block.Size = value;
-                block.Position = point * value;
-            }
+            UpdateAllBlockSizes();
         }
     }
 
@@ -87,16 +77,33 @@ public partial class Shape : Node2D
     private void HydrateChildren()
     {
         foreach (var shape in GetChildren()) shape.QueueFree();
-        for (var i = 0; i < (Points ?? []).Length; i++)
+        Blocks = new Block.Block[(Points ?? []).Length];
+        for (var i = 0; i < Blocks.Length; i++)
         {
             var block = _blockScene.Instantiate<Block.Block>();
-            var point = Points[i];
             AddChild(block);
-            block.Size = BlockSize;
-            block.Position = point * (block.Size + Gap);
-            block.Color = Color;
+            Blocks[i] = block;
+            UpdateBlockSize(block);
+            UpdateBlockColor(block);
         }
     }
+
+    private void UpdateBlockColor(Block.Block block) => block.Color = Color;
+    private void UpdateAllBlockColors() => Array.ForEach(Blocks, UpdateBlockColor);
+
+    private void UpdateBlockSize(Block.Block block)
+    {
+        block.Size = BlockSize;
+        UpdateBlockPosition(block);
+    }
+    private void UpdateAllBlockSizes() => Array.ForEach(Blocks, UpdateBlockSize);
+
+    private void UpdateBlockPosition(Block.Block block)
+    {
+        var point = Points[Array.IndexOf(Blocks, block)];
+        block.Position = point * (BlockSize + Gap);
+    }
+    private void UpdateAllBlockPositions() => Array.ForEach(Blocks, UpdateBlockPosition);
     
     // VVV DEBUG VVV  //
 
@@ -122,9 +129,13 @@ public partial class Shape : Node2D
         if (Input.IsActionJustPressed("ui_down")) direction += Vector2.Down;
         if (Input.IsActionJustPressed("ui_left")) direction += Vector2.Left;
         if (Input.IsActionJustPressed("ui_right")) direction += Vector2.Right;
-        if (direction != Vector2.Zero) foreach (var block in GetChildren().Cast<Block.Block>()) block.Move(direction * ShapeSize);
+        if (direction != Vector2.Zero)
+        {
+            var size = ShapeSize;
+            foreach (var block in Blocks) block.Move(direction * size);
+        }
 
-        if (Input.IsActionJustPressed("ui_accept")) foreach (var block in GetChildren().Cast<Block.Block>()) block.Expand();
-        if (Input.IsActionJustPressed("ui_cancel")) foreach (var block in GetChildren().Cast<Block.Block>()) block.Collapse();
+        if (Input.IsActionJustPressed("ui_accept")) foreach (var block in Blocks) block.Expand();
+        if (Input.IsActionJustPressed("ui_cancel")) foreach (var block in Blocks) block.Collapse();
     }
 }
