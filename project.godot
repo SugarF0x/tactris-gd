@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Tactris"
 run/main_scene="uid://b68vwqbiyy0oj"
-config/features=PackedStringArray("4.4", "Mobile")
+config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [display]

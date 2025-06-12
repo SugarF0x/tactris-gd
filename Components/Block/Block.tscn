@@ -6,7 +6,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ex2vs"]
 shader = ExtResource("2_8xymb")
 shader_parameter/glow_color = Color(1, 1, 1, 1)
-shader_parameter/edge_softness = 0.4
+shader_parameter/edge_softness = 0.3
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_8xymb"]
 
@@ -16,7 +16,7 @@ script = ExtResource("1_8mjfh")
 [node name="Shadow" type="Polygon2D" parent="."]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_ex2vs")
-scale = Vector2(2, 2)
+scale = Vector2(1.5, 1.5)
 texture = SubResource("CanvasTexture_8xymb")
 polygon = PackedVector2Array(-0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5)
 uv = PackedVector2Array(0, 0, 1, 0, 1, 1, 0, 1)
