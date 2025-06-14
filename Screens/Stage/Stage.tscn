@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://j835s817jqcx"]
+
+[ext_resource type="Script" uid="uid://dcxuotwf2i8kr" path="res://Screens/Stage/Stage.cs" id="1_32d5e"]
+[ext_resource type="PackedScene" uid="uid://d1lp41j7vwgrb" path="res://Components/Counter/Counter.tscn" id="2_h861c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lymrg"]
+bg_color = Color(0, 0.329802, 0.329802, 1)
+
+[node name="Stage" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lymrg")
+script = ExtResource("1_32d5e")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="CurrentScoreContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CurrentScoreLabel" type="Label" parent="MarginContainer/HBoxContainer/CurrentScoreContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Current Score"
+
+[node name="CurrentScoreCounter" parent="MarginContainer/HBoxContainer/CurrentScoreContainer" instance=ExtResource("2_h861c")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MaxScoreContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MaxScoreLabel" type="Label" parent="MarginContainer/HBoxContainer/MaxScoreContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Max Score"
+
+[node name="MaxScoreCounter" parent="MarginContainer/HBoxContainer/MaxScoreContainer" instance=ExtResource("2_h861c")]
+unique_name_in_owner = true
+layout_mode = 2

@@ -1,5 +1,6 @@
 using Godot;
-using System;
+
+namespace Tactris.Components.Counter;
 
 public partial class Counter : Control
 {
