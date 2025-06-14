@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://b68vwqbiyy0oj"]
+[gd_scene load_steps=2 format=3 uid="uid://b68vwqbiyy0oj"]
+
+[ext_resource type="PackedScene" uid="uid://j835s817jqcx" path="res://Screens/Stage/Stage.tscn" id="1_gxo8o"]
 
 [node name="Root" type="Control"]
 layout_mode = 3
@@ -7,3 +9,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Stage" parent="." instance=ExtResource("1_gxo8o")]
+layout_mode = 1
